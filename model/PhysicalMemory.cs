@@ -10,18 +10,18 @@ namespace CIS452_Project3_MemoryManagement.model
     {
         private int totalMemory;
         private int pageMemory;
-        private Page[] pages;
+        private int pageCount;
         private List<int> freeIndices;
         private List<int> usedIndices;
 
         public PhysicalMemory(int pages, int pageSize)
         {
+            pageCount = pages;
             totalMemory = pages * pageSize;
             pageMemory = pageSize;
-            this.pages = new Page[pages];
             freeIndices = new List<int>();
             usedIndices = new List<int>();
-            InitializeMemory(pageSize);
+            InitializeMemory();
         }
 
         public int TotalMemory
@@ -47,12 +47,11 @@ namespace CIS452_Project3_MemoryManagement.model
 
         public void ClearMemory()
         {
-            for (int i = 0; i < pages.Length; i++)
+            for (int i = 0; i < usedIndices.Count; i++)
             {
-                pages[i].ClearPage();
-                usedIndices.Remove(i);
-                freeIndices.Add(i);
+                freeIndices.Add(usedIndices[i]);
             }
+            usedIndices.Clear();
         }
 
         public int[] GetFreeIndices()
@@ -69,75 +68,34 @@ namespace CIS452_Project3_MemoryManagement.model
             return retUsedIndices;
         }
 
-        public Boolean AddPageAtIndex(int index, int pid, Segment type, int pageNumber)
+        public Boolean RequestMemory(int index)
         {
-            if (!freeIndices.Remove(index))
+            Boolean isMemoryOpen = false;
+            if (freeIndices.Contains(index))
             {
-                return false;
+                isMemoryOpen = true;
+                freeIndices.Remove(index);
+                usedIndices.Add(index);
             }
-            usedIndices.Add(index);
-            pages[index].SetPage(pid, type, pageNumber);
-            return true;
+            return isMemoryOpen;
         }
-
-        public Boolean RemovePageAtIndex(int index)
+        public Boolean ReleaseMemory(int index)
         {
-            if (!usedIndices.Remove(index))
+            Boolean isMemoryUsed = false;
+            if (usedIndices.Contains(index))
             {
-                return false;
+                isMemoryUsed = true;
+                usedIndices.Remove(index);
+                freeIndices.Add(index);
             }
-            freeIndices.Add(index);
-            pages[index].ClearPage();
-            return true;
+            return isMemoryUsed;
         }
+        
 
-        public Boolean RemoveProcessPages(int pid)
+        private void InitializeMemory()
         {
-            Boolean removedItem = false;
-            for (int i = 0; i < pages.Length; i++)
+            for (int i = 0; i < pageCount; i++)
             {
-                if (pages[i].Pid == pid)
-                {
-                    RemovePageAtIndex(i);
-                    removedItem = true;
-                }
-            }
-            return removedItem;
-        }
-
-        public Boolean RemoveProcessSegment(int pid, Segment segmentType)
-        {
-            Boolean removedItem = false;
-            for (int i = 0; i < pages.Length; i++)
-            {
-                if (pages[i].Pid == pid && pages[i].SegmentType == segmentType)
-                {
-                    RemovePageAtIndex(i);
-                    removedItem = true;
-                }
-            }
-            return removedItem;
-        }
-
-        public Boolean RemoveProcessPage(int pid, Segment segmentType, int pageNumber)
-        {
-            Boolean removedItem = false;
-            for (int i = 0; i < pages.Length; i++)
-            {
-                if (pages[i].Pid == pid && pages[i].SegmentType == segmentType && pages[i].PageNumber == pageNumber)
-                {
-                    RemovePageAtIndex(i);
-                    removedItem = true;
-                }
-            }
-            return removedItem;
-        }
-
-        private void InitializeMemory(int pageSize)
-        {
-            for (int i = 0; i < pages.Length; i++)
-            {
-                pages[i] = new Page(pageSize);
                 freeIndices.Add(i);
             }
         }

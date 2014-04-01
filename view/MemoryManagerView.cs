@@ -22,16 +22,24 @@ namespace CIS452_Project3_MemoryManagement
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            MemoryManager model = new MemoryManager(4096, 512);
+            Computer cpu = new Computer(4096, 512);
             List<Segment> segs = new List<Segment>();
             segs.Add(Segment.Text);
             segs.Add(Segment.Data);
             List<int> sizes = new List<int>();
             sizes.Add(1044);
             sizes.Add(940);
-            model.AllocateMemory(45, segs, sizes);
-            //model.AllocateMemory(46, segs, sizes);
-            model.FreeMemory(45);
+            cpu.SpawnProcess(segs, sizes);
+            segs.Clear();
+            sizes.Clear();
+            segs.Add(Segment.Text);
+            segs.Add(Segment.Data);
+            sizes.Add(340);
+            sizes.Add(345);
+            cpu.SpawnProcess(segs, sizes);
+            cpu.TerminateProcess(0);
+            cpu.SpawnProcess(segs, sizes);
+            int c = 4;
         }
     }
 }

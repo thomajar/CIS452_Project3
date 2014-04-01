@@ -47,9 +47,9 @@
     <Compile Include="controller\Controller.cs" />
     <Compile Include="model\Computer.cs" />
     <Compile Include="model\MemoryManager.cs" />
-    <Compile Include="model\Page.cs" />
     <Compile Include="model\PageTable.cs" />
     <Compile Include="model\PhysicalMemory.cs" />
+    <Compile Include="model\Process.cs" />
     <Compile Include="model\ProcessControlBlock.cs" />
     <Compile Include="model\Segment.cs" />
     <Compile Include="view\MemoryManagerView.cs">

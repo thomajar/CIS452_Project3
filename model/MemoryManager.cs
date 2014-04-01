@@ -16,7 +16,7 @@ namespace CIS452_Project3_MemoryManagement.model
             memory = new PhysicalMemory(pageCount, pageSize);
         }
 
-        public Boolean AllocateMemory(int pid, List<Segment> segments, List<int> sizes)
+        public Boolean AllocateMemory(ref Process p, List<Segment> segments, List<int> sizes)
         {
             if (segments.Count != sizes.Count)
             {
@@ -58,20 +58,35 @@ namespace CIS452_Project3_MemoryManagement.model
                 {
                     pageRequest = Convert.ToInt32(Math.Floor(temp));
                 }
+                List<int> logicalIndicies = new List<int>();
+                List<int> physicalIndicies = new List<int>();
+
                 for (int j = 0; j < pageRequest; j++)
                 {
-                    memory.AddPageAtIndex(freeIndices[insertIndex], pid, segments[i], j);
-                    insertIndex++;
+                    if (memory.RequestMemory(freeIndices[insertIndex]))
+                    {
+                        logicalIndicies.Add(j);
+                        physicalIndicies.Add(freeIndices[insertIndex]);
+                        insertIndex++;
+                    }
+                    else
+                    {
+                        // some sort of error between memory manager and physical memory sync
+                    }
                 }
+                p.AddSegment(segments[i], logicalIndicies, physicalIndicies);
             }
 
             return true;
             
         }
 
-        public Boolean FreeMemory(int pid)
+        public void FreeMemory(List<int> physicalAddresses)
         {
-            return memory.RemoveProcessPages(pid);
+            for (int i = 0; i < physicalAddresses.Count; i++)
+            {
+                memory.ReleaseMemory(physicalAddresses[i]);
+            }
         }
 
 

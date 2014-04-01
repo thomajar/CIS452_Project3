@@ -8,16 +8,14 @@ namespace CIS452_Project3_MemoryManagement.model
 {
     class Computer
     {
-        private List<ProcessControlBlock> processes;
-        private List<PageTable> pageTables;
+        private List<Process> processes;
         private MemoryManager memory;
 
         private int nextPID;
 
         public Computer(int physicalMemory, int pageSize)
         {
-            processes = new List<ProcessControlBlock>();
-            pageTables = new List<PageTable>();
+            processes = new List<Process>();
             memory = new MemoryManager(physicalMemory, pageSize);
             nextPID = 0;
         }
@@ -25,22 +23,24 @@ namespace CIS452_Project3_MemoryManagement.model
         public int SpawnProcess(List<Segment> segs, List<int> sizes)
         {
             int pid = nextPID;
+            Process p = new Process(nextPID);
 
-            // attempt to allocate memory
-            if (memory.AllocateMemory(pid, segs, sizes))
-            {
-                nextPID++;
-                ProcessControlBlock pcb = new ProcessControlBlock();
-                PageTable pt = new PageTable();
+            memory.AllocateMemory(ref p, segs, sizes);
 
-                processes.Add(pcb);
-                pageTables.Add(pt);
-            }
-            else
-            {
-                pid = -1;
-            }
+            processes.Add(p);
+           
             return pid;
+        }
+
+        public void TerminateProcess(int pid)
+        {
+            for (int i = 0; i < processes.Count; i++)
+            {
+                if (processes[i].GetPID() == pid)
+                {
+                    //memory.FreeMemory
+                }
+            }
         }
 
 
