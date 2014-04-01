@@ -28,5 +28,15 @@ namespace CIS452_Project3_MemoryManagement.model
         {
             return pid;
         }
+
+        public List<int> GetPhysicalAddresses()
+        {
+            return table.GetPhysicalAddresses();
+        }
+
+        public List<int> GetSegmentAddresses()
+        {
+
+        }
     }
 }

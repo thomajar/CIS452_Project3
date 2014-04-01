@@ -30,5 +30,10 @@ namespace CIS452_Project3_MemoryManagement.model
             }
             return true;
         }
+
+        public List<int> GetPhysicalAddresses()
+        {
+            return physicalPointer;
+        }
     }
 }

@@ -24,23 +24,36 @@ namespace CIS452_Project3_MemoryManagement.model
         {
             int pid = nextPID;
             Process p = new Process(nextPID);
-
-            memory.AllocateMemory(ref p, segs, sizes);
-
-            processes.Add(p);
-           
+            try
+            {
+                memory.AllocateMemory(ref p, segs, sizes);
+            }
+            catch (Exception)
+            {
+                pid = -1;
+            }
+            // if pid is 0 or greater, no error occured allocating memory
+            if (pid > -1)
+            {
+                nextPID++;
+                processes.Add(p);
+            }
             return pid;
         }
 
-        public void TerminateProcess(int pid)
+        public Boolean TerminateProcess(int pid)
         {
             for (int i = 0; i < processes.Count; i++)
             {
                 if (processes[i].GetPID() == pid)
                 {
-                    //memory.FreeMemory
+                    List<int> memoryToFree = processes[i].GetPhysicalAddresses();
+                    memory.FreeMemory(memoryToFree);
+                    processes.RemoveAt(i);
+                    return true;
                 }
             }
+            return false;
         }
 
 
