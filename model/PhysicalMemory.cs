@@ -8,22 +8,67 @@ namespace CIS452_Project3_MemoryManagement.model
 {
     class PhysicalMemory
     {
+        /// <summary>
+        /// Total memory in physical memory.
+        /// </summary>
         private int totalMemory;
+        /// <summary>
+        /// Amount of memory on each page.
+        /// </summary>
         private int pageMemory;
+        /// <summary>
+        /// Total count of pages.
+        /// </summary>
         private int pageCount;
+        /// <summary>
+        /// List of all free pages not currently being used in memory.
+        /// </summary>
         private List<int> freeIndices;
-        private List<int> usedIndices;
 
+        /// <summary>
+        /// Initializes physical memory to have pages number of pages of 
+        /// size pageSize.
+        /// </summary>
+        /// <param name="pages">Number of pages in memory.</param>
+        /// <param name="pageSize">Size of each page.</param>
         public PhysicalMemory(int pages, int pageSize)
         {
             pageCount = pages;
             totalMemory = pages * pageSize;
             pageMemory = pageSize;
             freeIndices = new List<int>();
-            usedIndices = new List<int>();
             InitializeMemory();
         }
 
+        /// <summary>
+        /// Creates a deep copy of PhysicalMemory.
+        /// </summary>
+        /// <returns>Deep copy of physical memory.</returns>
+        public PhysicalMemory Copy()
+        {
+            PhysicalMemory mem = new PhysicalMemory(this.pageCount,
+                this.pageMemory);
+            mem.SetFreeIndicies(this.freeIndices);
+            return mem;
+
+        }
+
+        /// <summary>
+        /// Sets the free indicies list.
+        /// </summary>
+        /// <param name="freeIndices"></param>
+        public void SetFreeIndicies(List<int> freeIndices)
+        {
+            this.freeIndices.Clear();
+            foreach (int item in freeIndices)
+            {
+                this.freeIndices.Add(item);
+            }
+        }
+
+        /// <summary>
+        /// Total amount of memory.
+        /// </summary>
         public int TotalMemory
         {
             get
@@ -32,6 +77,9 @@ namespace CIS452_Project3_MemoryManagement.model
             }
         }
 
+        /// <summary>
+        /// Size of page.
+        /// </summary>
         public int PageSize
         {
             get
@@ -40,6 +88,10 @@ namespace CIS452_Project3_MemoryManagement.model
             }
         }
 
+        /// <summary>
+        /// Amount of memory unused.
+        /// </summary>
+        /// <returns>Amount of memory unused.</returns>
         public int GetFreeMemorySize()
         {
             return freeIndices.Count * pageMemory;
@@ -47,27 +99,50 @@ namespace CIS452_Project3_MemoryManagement.model
 
         public void ClearMemory()
         {
-            for (int i = 0; i < usedIndices.Count; i++)
+            freeIndices.Clear();
+            for (int i = 0; i < pageCount; i++)
             {
-                freeIndices.Add(usedIndices[i]);
+                freeIndices.Add(i);
             }
-            usedIndices.Clear();
         }
 
-        public int[] GetFreeIndices()
+        /// <summary>
+        /// Obtains a list of free page indicies.
+        /// </summary>
+        /// <returns>List of free memory pages.</returns>
+        public List<int> GetFreeIndices()
         {
-            int[] retFreeIndices = new int[freeIndices.Count];
-            freeIndices.CopyTo(retFreeIndices, 0);
+            List<int> retFreeIndices = new List<int>();
+            foreach (int item in freeIndices)
+            {
+                retFreeIndices.Add(item);
+            }
+            retFreeIndices.Sort();
             return retFreeIndices;
         }
 
-        public int[] GetUsedIndices()
+        /// <summary>
+        /// Obtains a list of used page indicies.
+        /// </summary>
+        /// <returns>List of used memory pages.</returns>
+        public List<int> GetUsedIndices()
         {
-            int[] retUsedIndices = new int[usedIndices.Count];
-            usedIndices.CopyTo(retUsedIndices, 0);
+            List<int> retUsedIndices = new List<int>();
+            for (int i = 0; i < pageCount; i++)
+            {
+                if (!freeIndices.Contains(i))
+                {
+                    retUsedIndices.Add(i);
+                }
+            }
             return retUsedIndices;
         }
 
+        /// <summary>
+        /// Requests memory for particular page.
+        /// </summary>
+        /// <param name="index">Page index to request.</param>
+        /// <returns>True on success, False otherwise.</returns>
         public Boolean RequestMemory(int index)
         {
             Boolean isMemoryOpen = false;
@@ -75,23 +150,29 @@ namespace CIS452_Project3_MemoryManagement.model
             {
                 isMemoryOpen = true;
                 freeIndices.Remove(index);
-                usedIndices.Add(index);
             }
             return isMemoryOpen;
         }
+
+        /// <summary>
+        /// Releases memory for particular page.
+        /// </summary>
+        /// <param name="index">Page index to release.</param>
+        /// <returns>True on success, False otherwise.</returns>
         public Boolean ReleaseMemory(int index)
         {
             Boolean isMemoryUsed = false;
-            if (usedIndices.Contains(index))
+            if (!freeIndices.Contains(index))
             {
                 isMemoryUsed = true;
-                usedIndices.Remove(index);
                 freeIndices.Add(index);
             }
             return isMemoryUsed;
         }
-        
 
+        /// <summary>
+        /// Initializes memory.
+        /// </summary>
         private void InitializeMemory()
         {
             for (int i = 0; i < pageCount; i++)

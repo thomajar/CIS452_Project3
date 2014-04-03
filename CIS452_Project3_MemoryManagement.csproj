@@ -52,6 +52,7 @@
     <Compile Include="model\Process.cs" />
     <Compile Include="model\ProcessControlBlock.cs" />
     <Compile Include="model\Segment.cs" />
+    <Compile Include="model\ViewState.cs" />
     <Compile Include="view\MemoryManagerView.cs">
       <SubType>Form</SubType>
     </Compile>

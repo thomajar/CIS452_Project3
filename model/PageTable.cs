@@ -17,7 +17,29 @@ namespace CIS452_Project3_MemoryManagement.model
             physicalPointer = new List<int>();
         }
 
-        public Boolean AddSegment(int startIndex, List<int> logical, List<int> physical)
+        public PageTable Copy()
+        {
+            PageTable pageTable = new PageTable();
+            pageTable.SetTable(this.logicalPointer, this.physicalPointer);
+            return pageTable;
+        }
+
+        public void SetTable(List<int> logical, List<int> physical)
+        {
+            this.logicalPointer.Clear();
+            this.physicalPointer.Clear();
+            foreach (int item in logical)
+            {
+                this.logicalPointer.Add(item);
+            }
+            foreach (int item in physical)
+            {
+                this.physicalPointer.Add(item);
+            }
+        }
+
+        public Boolean AddSegment(int startIndex, List<int> logical, 
+            List<int> physical)
         {
             if (logical.Count != physical.Count)
             {
@@ -35,5 +57,16 @@ namespace CIS452_Project3_MemoryManagement.model
         {
             return physicalPointer;
         }
+
+        public int GetLogicalMatch(int physical)
+        {
+            int index = physicalPointer.IndexOf(physical);
+            if (index > -1)
+            {
+                return logicalPointer[index];
+            }
+            return -1;
+        }
+
     }
 }
