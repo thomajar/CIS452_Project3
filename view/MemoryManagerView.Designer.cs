@@ -148,7 +148,7 @@
             this.tlpPhysicalMemoryLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24F));
             this.tlpPhysicalMemoryLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28F));
             this.tlpPhysicalMemoryLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24F));
-            this.tlpPhysicalMemoryLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tlpPhysicalMemoryLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tlpPhysicalMemoryLayout.Controls.Add(this.lblPhysicalMemoryFrame, 0, 1);
             this.tlpPhysicalMemoryLayout.Controls.Add(this.lblPhysicalMemoryPID, 1, 1);
             this.tlpPhysicalMemoryLayout.Controls.Add(this.lblPhysicalMemorySegment, 2, 1);
@@ -185,7 +185,7 @@
             this.lblPhysicalMemoryFrame.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPhysicalMemoryFrame.Location = new System.Drawing.Point(4, 216);
             this.lblPhysicalMemoryFrame.Name = "lblPhysicalMemoryFrame";
-            this.lblPhysicalMemoryFrame.Size = new System.Drawing.Size(62, 30);
+            this.lblPhysicalMemoryFrame.Size = new System.Drawing.Size(61, 30);
             this.lblPhysicalMemoryFrame.TabIndex = 1;
             this.lblPhysicalMemoryFrame.Text = "Frame";
             this.lblPhysicalMemoryFrame.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -195,9 +195,9 @@
             this.lblPhysicalMemoryPID.AutoSize = true;
             this.lblPhysicalMemoryPID.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblPhysicalMemoryPID.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPhysicalMemoryPID.Location = new System.Drawing.Point(73, 216);
+            this.lblPhysicalMemoryPID.Location = new System.Drawing.Point(72, 216);
             this.lblPhysicalMemoryPID.Name = "lblPhysicalMemoryPID";
-            this.lblPhysicalMemoryPID.Size = new System.Drawing.Size(62, 30);
+            this.lblPhysicalMemoryPID.Size = new System.Drawing.Size(61, 30);
             this.lblPhysicalMemoryPID.TabIndex = 2;
             this.lblPhysicalMemoryPID.Text = "PID";
             this.lblPhysicalMemoryPID.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -207,9 +207,9 @@
             this.lblPhysicalMemorySegment.AutoSize = true;
             this.lblPhysicalMemorySegment.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblPhysicalMemorySegment.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPhysicalMemorySegment.Location = new System.Drawing.Point(142, 216);
+            this.lblPhysicalMemorySegment.Location = new System.Drawing.Point(140, 216);
             this.lblPhysicalMemorySegment.Name = "lblPhysicalMemorySegment";
-            this.lblPhysicalMemorySegment.Size = new System.Drawing.Size(74, 30);
+            this.lblPhysicalMemorySegment.Size = new System.Drawing.Size(73, 30);
             this.lblPhysicalMemorySegment.TabIndex = 3;
             this.lblPhysicalMemorySegment.Text = "Segment";
             this.lblPhysicalMemorySegment.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -219,9 +219,9 @@
             this.lblPhysicalMemoryPage.AutoSize = true;
             this.lblPhysicalMemoryPage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblPhysicalMemoryPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPhysicalMemoryPage.Location = new System.Drawing.Point(223, 216);
+            this.lblPhysicalMemoryPage.Location = new System.Drawing.Point(220, 216);
             this.lblPhysicalMemoryPage.Name = "lblPhysicalMemoryPage";
-            this.lblPhysicalMemoryPage.Size = new System.Drawing.Size(62, 30);
+            this.lblPhysicalMemoryPage.Size = new System.Drawing.Size(61, 30);
             this.lblPhysicalMemoryPage.TabIndex = 4;
             this.lblPhysicalMemoryPage.Text = "Page";
             this.lblPhysicalMemoryPage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -230,11 +230,11 @@
             // 
             this.scrollbarPhysicalMemory.Dock = System.Windows.Forms.DockStyle.Fill;
             this.scrollbarPhysicalMemory.LargeChange = 12;
-            this.scrollbarPhysicalMemory.Location = new System.Drawing.Point(289, 247);
+            this.scrollbarPhysicalMemory.Location = new System.Drawing.Point(285, 247);
             this.scrollbarPhysicalMemory.Maximum = 12;
             this.scrollbarPhysicalMemory.Name = "scrollbarPhysicalMemory";
             this.tlpPhysicalMemoryLayout.SetRowSpan(this.scrollbarPhysicalMemory, 12);
-            this.scrollbarPhysicalMemory.Size = new System.Drawing.Size(35, 371);
+            this.scrollbarPhysicalMemory.Size = new System.Drawing.Size(39, 371);
             this.scrollbarPhysicalMemory.TabIndex = 5;
             this.scrollbarPhysicalMemory.Scroll += new System.Windows.Forms.ScrollEventHandler(this.scrollbarPhysicalMemory_Scroll);
             // 
@@ -361,7 +361,7 @@
             this.tlpProcessPageTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33332F));
             this.tlpProcessPageTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
             this.tlpProcessPageTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-            this.tlpProcessPageTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 31F));
+            this.tlpProcessPageTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.tlpProcessPageTable.Controls.Add(this.label2, 0, 1);
             this.tlpProcessPageTable.Controls.Add(this.label3, 1, 1);
             this.tlpProcessPageTable.Controls.Add(this.label4, 2, 1);
@@ -396,7 +396,7 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(4, 32);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(88, 30);
+            this.label2.Size = new System.Drawing.Size(87, 30);
             this.label2.TabIndex = 1;
             this.label2.Text = "Segment";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -406,9 +406,9 @@
             this.label3.AutoSize = true;
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(99, 32);
+            this.label3.Location = new System.Drawing.Point(98, 32);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(88, 30);
+            this.label3.Size = new System.Drawing.Size(87, 30);
             this.label3.TabIndex = 2;
             this.label3.Text = "Logical";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -418,9 +418,9 @@
             this.label4.AutoSize = true;
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(194, 32);
+            this.label4.Location = new System.Drawing.Point(192, 32);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(88, 30);
+            this.label4.Size = new System.Drawing.Size(87, 30);
             this.label4.TabIndex = 3;
             this.label4.Text = "Physical";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -442,11 +442,11 @@
             // 
             this.scrollBarPageTable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.scrollBarPageTable.LargeChange = 12;
-            this.scrollBarPageTable.Location = new System.Drawing.Point(286, 63);
+            this.scrollBarPageTable.Location = new System.Drawing.Point(283, 63);
             this.scrollBarPageTable.Maximum = 12;
             this.scrollBarPageTable.Name = "scrollBarPageTable";
             this.tlpProcessPageTable.SetRowSpan(this.scrollBarPageTable, 12);
-            this.scrollBarPageTable.Size = new System.Drawing.Size(33, 374);
+            this.scrollBarPageTable.Size = new System.Drawing.Size(36, 374);
             this.scrollBarPageTable.TabIndex = 7;
             this.scrollBarPageTable.Scroll += new System.Windows.Forms.ScrollEventHandler(this.scrollBarPageTable_Scroll);
             // 
@@ -728,7 +728,7 @@
             this.cbVirtualMemoryEnable.Location = new System.Drawing.Point(144, 77);
             this.cbVirtualMemoryEnable.Name = "cbVirtualMemoryEnable";
             this.cbVirtualMemoryEnable.Size = new System.Drawing.Size(135, 31);
-            this.cbVirtualMemoryEnable.TabIndex = 3;
+            this.cbVirtualMemoryEnable.TabIndex = 5;
             this.cbVirtualMemoryEnable.Text = "Enabled";
             this.cbVirtualMemoryEnable.UseVisualStyleBackColor = true;
             // 
@@ -746,7 +746,7 @@
             this.txtPhysicalMemoryIn.Location = new System.Drawing.Point(144, 7);
             this.txtPhysicalMemoryIn.Name = "txtPhysicalMemoryIn";
             this.txtPhysicalMemoryIn.Size = new System.Drawing.Size(135, 22);
-            this.txtPhysicalMemoryIn.TabIndex = 5;
+            this.txtPhysicalMemoryIn.TabIndex = 3;
             // 
             // label13
             // 
@@ -1151,7 +1151,6 @@
             this.Controls.Add(this.tlpMain);
             this.Name = "MemoryManagerView";
             this.Text = "Memory Management Simulator";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.tlpMain.ResumeLayout(false);
             this.tlpPhysicalMemoryLayout.ResumeLayout(false);
             this.tlpPhysicalMemoryLayout.PerformLayout();

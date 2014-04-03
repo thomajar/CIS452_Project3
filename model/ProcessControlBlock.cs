@@ -8,17 +8,39 @@ namespace CIS452_Project3_MemoryManagement.model
 {
     class ProcessControlBlock
     {
+        /// <summary>
+        /// Index in page table where text section begins.
+        /// </summary>
         private int textIndex;
+        /// <summary>
+        /// Length of text section in page table.
+        /// </summary>
         private int textLength;
+        /// <summary>
+        /// Index in page table where data sectioni begins.
+        /// </summary>
         private int dataIndex;
+        /// <summary>
+        /// Length of data section in page table.
+        /// </summary>
         private int dataLength;
+        /// <summary>
+        /// Index to store next segment at.
+        /// </summary>
         private int nextIndex = 0;
         
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
         public ProcessControlBlock()
         {
             
         }
 
+        /// <summary>
+        /// Creates a deep copy of ProcessControlBlock object.
+        /// </summary>
+        /// <returns>Copy of ProcessControlBlock Object.</returns>
         public ProcessControlBlock Copy()
         {
             ProcessControlBlock pcb = new ProcessControlBlock();
@@ -28,22 +50,42 @@ namespace CIS452_Project3_MemoryManagement.model
             return pcb;
         }
 
+        /// <summary>
+        /// Sets the index for where next segment should begin.
+        /// </summary>
+        /// <param name="index">Index where next segment begins.</param>
         public void SetNextIndex(int index)
         {
             this.nextIndex = index;
         }
 
+        /// <summary>
+        /// Sets data segment index and length.
+        /// </summary>
+        /// <param name="index">Start index.</param>
+        /// <param name="length">Segment Length.</param>
         public void SetDataSegment(int index, int length)
         {
             this.dataIndex = index;
             this.dataLength = length;
         }
+
+        /// <summary>
+        /// Sets text segment index and length.
+        /// </summary>
+        /// <param name="index">Start index.</param>
+        /// <param name="length">Segment length.</param>
         public void SetTextSegment(int index, int length)
         {
             this.textIndex = index;
             this.textLength = length;
         }
 
+        /// <summary>
+        /// Gets index in page table of segment.
+        /// </summary>
+        /// <param name="s">Segment to find.</param>
+        /// <returns>Index of segment.</returns>
         public int GetSegmentPointer(Segment s)
         {
             switch (s)
@@ -57,6 +99,12 @@ namespace CIS452_Project3_MemoryManagement.model
             }
         }
 
+        /// <summary>
+        /// Stores segment information for new segment.
+        /// </summary>
+        /// <param name="s">Segment type.</param>
+        /// <param name="length">Segment length.</param>
+        /// <returns>True on success, False otherwise.</returns>
         public Boolean AddSegment(Segment s, int length)
         {
             Boolean addResult = true;
@@ -79,6 +127,11 @@ namespace CIS452_Project3_MemoryManagement.model
             return addResult;
         }
 
+        /// <summary>
+        /// Gets the type of a segment at logical address.
+        /// </summary>
+        /// <param name="logicalAddress">Logical address to search.</param>
+        /// <returns>Type of segment.</returns>
         public Segment GetSegmentType(int logicalAddress)
         {
             if (logicalAddress >= textIndex && 

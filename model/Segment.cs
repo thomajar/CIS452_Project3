@@ -1,6 +1,11 @@
-﻿public enum Segment
+﻿/// <summary>
+/// Stack used to represent the type of data stored on a page.
+/// </summary>
+public enum Segment
 {
     None,
     Text,
-    Data
+    Data,
+    Stack,
+    Heap
 };

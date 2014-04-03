@@ -16,31 +16,60 @@ namespace CIS452_Project3_MemoryManagement
 {
     public partial class MemoryManagerView: Form
     {
+        // display constants
         private const int DISPLAY_PHYSICAL_MEMORY_PAGE_COLUMNS = 12;           
         private const int DISPLAY_PHYSICAL_MEMORY_PAGE_ROWS = 4;
         private const int DISPLAY_PHYSICAL_MEMORY_PAGE_OFFEST = 2;
-
         private const int DISPLAY_PAGE_TABLE_COLUMNS = 12;
         private const int DISPLAY_PAGE_TABLE_ROWS = 3;
         private const int DISPLAY_PAGE_TABLE_OFFSET = 2;
-
         private const int MEM_FRAME_INDEX = 0;
         private const int MEM_PID_INDEX = 1;
         private const int MEM_SEGMENT_INDEX = 2;
         private const int MEM_PAGE_INDEX = 3;
-
         private const int PROC_SEGMENT_INDEX = 0;
         private const int PROC_LOGICAL_INDEX = 1;
         private const int PROC_PHYSICAL_INDEX = 2;
 
+        /// <summary>
+        /// Labels for physical memory display.
+        /// </summary>
         private Label[,] physicalMemoryLabels;
+        /// <summary>
+        /// Labels for page table display.
+        /// </summary>
         private Label[,] processPageTableLabels;
 
+        /// <summary>
+        /// Controller to interact with model.
+        /// </summary>
         private Controller ctrl;
+        /// <summary>
+        /// Pointer to what index should be at top of physical memory
+        /// display table.
+        /// </summary>
         private int physicalMemoryIndex = 0;
+        /// <summary>
+        /// Pointer to what index should be at top of page table
+        /// display table.
+        /// </summary>
         private int pageTableIndex = 0;
+        /// <summary>
+        /// The current process to have its page table displayed.
+        /// </summary>
         private int processNumber = 0;
+        /// <summary>
+        /// List of colors to use in physical memory display.
+        /// </summary>
+        private Color[] colors;
+        /// <summary>
+        /// List of pids used in physical memory display.
+        /// </summary>
+        private int[] colorPID;
 
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
         public MemoryManagerView()
         {
             InitializeComponent();
@@ -84,11 +113,6 @@ namespace CIS452_Project3_MemoryManagement
                         j, i + DISPLAY_PAGE_TABLE_OFFSET);
                 }
             }
-            
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
             colors = new Color[DISPLAY_PAGE_TABLE_COLUMNS];
             colors[0] = Color.Salmon;
             colors[1] = Color.DodgerBlue;
@@ -108,17 +132,19 @@ namespace CIS452_Project3_MemoryManagement
             {
                 colorPID[i] = -1;
             }
-
+            
         }
 
-        private Color[] colors;
-        private int[] colorPID;
-
+        /// <summary>
+        /// Updates the view for entire form.
+        /// </summary>
         private void UpdateView()
         {
             this.SuspendLayout();
+            // get the view state from controller
             ViewState view = ctrl.GetViewState(physicalMemoryIndex,
                 processNumber, pageTableIndex);
+            // set physical memory stats
             lblMemorySizeOut.Text = "Memory Size : " + view.MemorySize + 
                 " (Bytes)";
             lblPageCountOut.Text = "Page Count : " + view.PageCount;
@@ -126,6 +152,7 @@ namespace CIS452_Project3_MemoryManagement
             lblPageUsedOut.Text = "Pages Used : " + view.PagesUsed;
             pbMemoryUsed.Value = 100 * view.PagesUsed / view.PageCount;
 
+            // update physical memory colors and table values.
             Boolean[] colorStillUsed = new Boolean[DISPLAY_PAGE_TABLE_COLUMNS];
 
             for (int i = 0; i < view.Rows.Count; i++)
@@ -193,6 +220,7 @@ namespace CIS452_Project3_MemoryManagement
                 
             }
 
+            // check which colors are still used
             for (int i = 0; i < colorStillUsed.Length; i++)
             {
                 if (!colorStillUsed[i])
@@ -219,9 +247,10 @@ namespace CIS452_Project3_MemoryManagement
                         break;
                 }              
             }
+            // update process data section stats
             lblProcessTextOut.Text = "Text Pages : " + textPages;
             lblProcessDataOut.Text = "Data Pages : " + dataPages;
-
+            // update page table for process
             for (int i = 0; i < view.PageTableRows.Count 
                 && i < DISPLAY_PAGE_TABLE_COLUMNS; i++)
             {
@@ -240,12 +269,14 @@ namespace CIS452_Project3_MemoryManagement
                 processPageTableLabels[i, PROC_PHYSICAL_INDEX].Text = ".";
             }
 
+            // update process labels
             lblProcessNumberOut.Text = "Process " + processNumber;
             gbProcessInfo.Text = "Process " + processNumber + 
                 " Memory Information";
             lblPageTableForProcess.Text = "Page Table for Process " +
                 processNumber;
 
+            // update scrollbars
             int scrollBarMax = view.PageCount - 1;
             if (scrollBarMax < 0)
             {
@@ -263,13 +294,18 @@ namespace CIS452_Project3_MemoryManagement
             scrollScriptIndex.Maximum = ctrl.GetSteps() - 1;
             scrollScriptIndex.Value = ctrl.GetStepIndex();
 
+            // update command list.
             lblLastCommandOut.Text = ctrl.GetLastCommand();
             txtCommandIn.Text = ctrl.GetCurrentCommand();
 
             this.ResumeLayout();
         }
 
-
+        /// <summary>
+        /// Starts computer.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnStartComputer_Click(object sender, EventArgs e)
         {
             int physicalMemorySize;
@@ -339,6 +375,11 @@ namespace CIS452_Project3_MemoryManagement
             
         }
 
+        /// <summary>
+        /// Restarts computer to default state.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnRestartComputer_Click(object sender, EventArgs e)
         {
             if (ctrl.RestartComputer())
@@ -351,6 +392,11 @@ namespace CIS452_Project3_MemoryManagement
             }
         }
 
+        /// <summary>
+        /// Destroys computer and settings.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDestroyComputer_Click(object sender, EventArgs e)
         {
             if (ctrl.DestroyComputer())
@@ -371,6 +417,11 @@ namespace CIS452_Project3_MemoryManagement
             }
         }
 
+        /// <summary>
+        /// Spawns a new process if possible.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSpawnProcess_Click(object sender, EventArgs e)
         {
             int textSize;
@@ -417,6 +468,11 @@ namespace CIS452_Project3_MemoryManagement
             }
         }
 
+        /// <summary>
+        /// Gets previous pid information.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnPreviousProcess_Click(object sender, EventArgs e)
         {
             processNumber = ctrl.GetPreviousPID(processNumber);
@@ -426,6 +482,11 @@ namespace CIS452_Project3_MemoryManagement
             UpdateView();
         }
 
+        /// <summary>
+        ///  Gets next pid information.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnNextProcess_Click(object sender, EventArgs e)
         {
             processNumber = ctrl.GetNextPID(processNumber);
@@ -435,6 +496,11 @@ namespace CIS452_Project3_MemoryManagement
             UpdateView();
         }
 
+        /// <summary>
+        /// Updates physical memory to display.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void scrollbarPhysicalMemory_Scroll(object sender, 
             ScrollEventArgs e)
         {
@@ -442,6 +508,11 @@ namespace CIS452_Project3_MemoryManagement
             UpdateView();
         }
 
+        /// <summary>
+        /// Updates page table to display.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void scrollBarPageTable_Scroll(object sender, 
             ScrollEventArgs e)
         {
@@ -449,6 +520,11 @@ namespace CIS452_Project3_MemoryManagement
             UpdateView();
         }
 
+        /// <summary>
+        /// Terminates a process.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnTerminateProcess_Click(object sender, EventArgs e)
         {
             ctrl.TerminateProcess(processNumber);
@@ -456,6 +532,11 @@ namespace CIS452_Project3_MemoryManagement
             UpdateView();
         }
 
+        /// <summary>
+        /// Submits command to controller.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSubmitCommand_Click(object sender, EventArgs e)
         {
             if (ctrl.GetStepIndex() + 1 != ctrl.GetSteps())
@@ -475,6 +556,11 @@ namespace CIS452_Project3_MemoryManagement
             UpdateView();
         }
 
+        /// <summary>
+        /// Submits command to controller on enter.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtCommandIn_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == '\r')
@@ -483,6 +569,11 @@ namespace CIS452_Project3_MemoryManagement
             }
         }
 
+        /// <summary>
+        /// Show open file dialog to select script.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -490,30 +581,42 @@ namespace CIS452_Project3_MemoryManagement
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 ctrl.LoadScript(ofd.FileName);
+                txtScriptIn.Text = ofd.FileName;
                 UpdateView();
             }
         }
 
+        /// <summary>
+        /// Redoes last operation.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnRedo_Click(object sender, EventArgs e)
         {
             ctrl.NextStep();
             UpdateView();
         }
 
+        /// <summary>
+        /// Undoes previous operation.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnUndo_Click(object sender, EventArgs e)
         {
             ctrl.PreviousStep();
             UpdateView();
         }
 
+        /// <summary>
+        /// Updates script index.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void scrollScriptIndex_Scroll(object sender, EventArgs e)
         {
             ctrl.JumpToStep(scrollScriptIndex.Value);
             UpdateView();
-        }
-
-
-
-        
+        }  
     }
 }
